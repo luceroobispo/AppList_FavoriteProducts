@@ -14,7 +14,6 @@ import com.luceroobispo.applist_favoriteproducts.ui.theme.AppList_FavoriteProduc
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             AppList_FavoriteProductsTheme {
                 Surface(

@@ -26,22 +26,21 @@ import com.luceroobispo.applist_favoriteproducts.ui.shared.ProductList
 
 @Composable
 fun ProductListScreen() {
-    val productName = remember { mutableStateOf("") }
-    val quantity = 10
+    val productName = remember {mutableStateOf("")}
+    val numberOfProducts = 50
     val products = remember { mutableStateOf(emptyList<Product>()) }
 
     val productRepository = ProductRepositoryFactory.getProductRepository()
 
-    Scaffold {paddingValues ->
+    Scaffold { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             SearchBar(productName) {
-                productRepository.getProducts(productName.value, quantity) { response ->
+                productRepository.getProducts(productName.value, numberOfProducts) { response ->
                     products.value = response
                 }
             }
             ProductList(products)
         }
-
     }
 }
 
@@ -74,7 +73,7 @@ fun SearchBar(productName: MutableState<String>, onShowProductsClick: () -> Unit
             modifier = Modifier
                 .padding(start = 16.dp)
         ) {
-            Text("Show")
+            Text("Show products")
         }
     }
 }

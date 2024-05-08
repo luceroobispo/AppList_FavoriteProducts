@@ -1,35 +1,44 @@
 package com.luceroobispo.applist_favoriteproducts.ui.shared
 
-import androidx.compose.foundation.layout.Row
+
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Card
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import com.luceroobispo.applist_favoriteproducts.feature_product.data.model.Product
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.luceroobispo.applist_favoriteproducts.feature_product.data.model.Product
+import com.luceroobispo.applist_favoriteproducts.feature_product.data.repository.ProductRepositoryFactory
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ProductCard(product: Product) {
-    val isFavorite = remember { mutableStateOf(product.isFavorite) }
-    isFavorite.value = product.isFavorite
+    val isFavorite = remember {
+        mutableStateOf(false)
+    }
+    isFavorite.value = product.isFavorite ?: false
 
-    //val productRepository = ProductRepositoryFactory.getProductRepository()
+    val productRepository = ProductRepositoryFactory.getProductRepository()
 
 
-    Card( modifier = Modifier.padding(4.dp)) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Row(modifier = Modifier.padding(8.dp)) {
             GlideImage(
                 imageModel = { product.image },
                 modifier = Modifier.size(100.dp)
@@ -45,20 +54,21 @@ fun ProductCard(product: Product) {
             IconButton(onClick = {
                 isFavorite.value = !isFavorite.value
                 product.isFavorite = isFavorite.value
-                /*
-                if (isFavorite.value == true) {
+
+                if (isFavorite.value) {
                     productRepository.addFavorite(product)
-                    product.isFavorite = true
                 } else {
                     productRepository.deleteFavorite(product)
-                    product.isFavorite = false
                 }
-                */
             }) {
                 Icon(
-                    Icons.Filled.Favorite,
-                    tint = if(isFavorite.value) Color.Red else Color.White,
-                    contentDescription = "Favorite"
+                    Icons.Filled.Favorite, "Favorite", tint =
+                    if (isFavorite.value) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        Color.Gray
+                    }
+
                 )
             }
         }

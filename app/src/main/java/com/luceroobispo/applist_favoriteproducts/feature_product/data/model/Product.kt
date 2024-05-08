@@ -5,7 +5,7 @@ data class ProductWrapper(
 )
 
 data class Product(
-    var isFavorite: Boolean = false,
+    var isFavorite: Boolean? = false,
 
     val id: Int,
     val title: String,
